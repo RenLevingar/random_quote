@@ -1,11 +1,13 @@
 import './App.css';
 import {useState,useEffect} from 'react';
 
+// API URL
 let url = "https://api.quotable.io/random"
 
 function App() {
   const [quote, setQuote] = useState([])
   const [generate,setGenerate] = useState(false)
+  const [count, setCount] = useState(0)
   
   useEffect(() => {
     fetch(url).then((response) => {
@@ -21,13 +23,14 @@ function App() {
 
   function newQuote(){
     setGenerate(!generate)
+    setCount(prevCount => prevCount + 1)
   }
 
   return (
     <main>
       <div>
-        <h1 className='quote'>"<em>{quote.content}</em>"</h1>
-        <h1>-{quote.author}</h1>
+        <h1 key={count} className='quote'>"<strong>{quote.content}</strong>"</h1>
+        <h3><em>-{quote.author}</em></h3>
       </div>
       <button onClick={newQuote}>Generate New</button>
     </main>
